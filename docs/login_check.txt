@@ -1,0 +1,24 @@
+# check if last three passwords are same or not
+
+# django authomated the process of creating and checking passwords in hash format
+# we just have to use it wisely
+from django.contrib.auth.hashers import make_password,check_password
+
+# we'll be changing the table names according to our app
+                    if check_password(data["new_password"], user_obj.password):
+                        return helper.get_error_response(constants.get_new_and_old_password_same_error_code())
+                    else:
+                        passwordsendcount.objects.filter(user_profile_id=user_obj.id).delete()
+                        all_passwords = storeOldPassword.get_old_passwords(user_obj.id)
+                        if all_passwords == None:
+                            storeOldPassword.add_latest_password(user_obj.id,
+                                                                 user_obj.password,
+                                                                 user_obj.date_joined)
+                        elif all_passwords:
+                            for password in all_passwords:
+                                if check_password(new_password,password):
+                                    return helper.get_error_response(constants.get_new_and_old_password_same_error_code())
+                            storeOldPassword.add_latest_password(user_obj.id,
+                                                                 user_obj.password,
+                                                                 user_obj.date_joined)
+                        # cn-glondhe ends here
